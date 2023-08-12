@@ -1,15 +1,23 @@
 <?php
 
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\HistoryController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CardController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
-Вход и регистрация
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
 */
 
 Route::get('/', function () {
@@ -18,9 +26,9 @@ Route::get('/', function () {
 
 Route::get('/book', [BookController::class, 'showBook']);
 
-Route::get('/author', [AuthorController::class, 'showAuthor']);
+Route::get('/author', [AuthorController::class, 'showAuthors']);
 
-Route::get('/history', [HistoryController::class, 'showHistory']);
+Route::get('/about', [AboutController::class, 'showAbout']);
 
 Route::middleware('guest')->group(function () {
     // отображение формы регистрации
@@ -48,7 +56,27 @@ Route::middleware('auth')->group(function () {
 Route::view('auth', 'auth');
 Route::view('guest', 'auth')->middleware('guest'); // только для гостей
 
+// роуты с примерами авторизации
+Route::get('products', [ProductController::class, 'index']);
+Route::get('products/{product}', [ProductController::class, 'show']);
+Route::get('products/{product}/edit', [ProductController::class, 'edit']);
+
+// создание политики:
+// php artisan make:policy TestPolicy
+// или сразу для модели
+// php artisan make:policy ProductPolicy --model=Product
+
 // роутер доступный только для тех у кого есть право "is-admin"
 Route::get('secret', function () {
     echo 'secret';
 })->can('is-admin');
+
+// то же самое
+Route::get('secret-middleware', function () {
+    echo 'secret middleware';
+})->middleware('can:is-admin');
+
+Route::get('home', [HomeController::class, 'homepage']);
+
+Route::get('card/{id}', [CardController::class, 'showCard'])->name('card');
+

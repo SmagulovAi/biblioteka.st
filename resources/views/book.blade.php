@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head><script src="/docs/5.3/assets/js/color-modes.js"></script>
@@ -121,6 +120,7 @@
 
     
   </head>
+
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
       <symbol id="check2" viewBox="0 0 16 16">
@@ -138,41 +138,6 @@
       </symbol>
     </svg>
 
-    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-              id="bd-theme"
-              type="button"
-              aria-expanded="false"
-              data-bs-toggle="dropdown"
-              aria-label="Toggle theme (auto)">
-        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-            Light
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-            Dark
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            Auto
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-      </ul>
-    </div>
-
     
     <div class="container">
         
@@ -184,72 +149,72 @@
       </div>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">Главная</a></li>
-        <li><a href="#" class="nav-link px-2">Книги</a></li>
-        <li><a href="#" class="nav-link px-2">Авторы</a></li>
-        <li><a href="#" class="nav-link px-2">О нас</a></li>
+        <li><a href="/home" class="nav-link px-2 link-secondary">Главная</a></li>
+        <li><a href="/book" class="nav-link px-2">Книги</a></li>
+        <li><a href="/author" class="nav-link px-2">Авторы</a></li>
+        <li><a href="/about" class="nav-link px-2">О нас</a></li>
       </ul>
-
+      
+      @guest
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Вход</button>
-        <button type="button" class="btn btn-primary">Регистрация</button>
+        <a href="/login" class="btn btn-outline-primary me-2">Вход</a>
+        <a href="/register" class="btn btn-primary">Регистрация</a>
       </div>
+      @endguest
+      @auth
+        <div class="col-md-3 text-end">
+          <a href="/logout" class="btn btn-outline-warning me-2">Выход</a>
+          <form action="{{ route('logout') }}" method="POST" class="form-inline">
+            @csrf
+        </div>
+      @endauth
     </header>
-  </div>
+    </div>
 
-<main>
+  <main>
 
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Книги - устройство способное разжечь воображение.</h1>
-        <p class="lead text-body-secondary">Алан Беннет.</p>
-        <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-        </p>
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">Книги - устройство способное разжечь воображение.</h1>
+          <p class="lead text-body-secondary">Алан Беннет.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="album py-5 bg-body-tertiary">
-    <div class="container">
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container">
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach($books as $book)
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Обложка</text></svg>
-                    <div class="card-body">
-                        <p class="card-text">{{ $book->name }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Читать</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Подробнее</a>
-                        </div>
-                            <small class="text-body-secondary">{{ $book->created_at }}</small>
-                    </div>
-                </div>
-            </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              @foreach($books as $book)
+              <div class="col">
+                  <div class="card shadow-sm">
+                      <svg src="" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Обложка</text></svg>
+                      <div class="card-body">
+                          <p class="card-text">{{ $book->name }}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                              <a href="{{ route ('card', $book->id) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                          </div>
+                              <small class="text-body-secondary">{{ $book->created_at }}</small>
+                      </div>
+                  </div>
+              </div>
+              </div>
+              @endforeach
+          </div>
+      </div>
+  </main>
 
-</main>
-
-    <footer class="text-body-secondary py-5">
-        <button id="scrollToTopBtn" title="Наверх">
-        <i class="fas fa-arrow-up"></i>
-        </button>
-        <div class="container">
-            <p class="float-end mb-1">
-            <a href="#">Подняться наверх</a>
-            </p>
-            <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-            <p class="mb-0"><a href="/book">Вернуться на главную</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
-        </div>
-    </footer>
+  <footer class="text-body-secondary py-5">
+      <button id="scrollToTopBtn" title="Наверх">
+      <i class="fas fa-arrow-up"></i>
+      </button>
+      <div class="container">
+        <p class="mb-1">&copy; Библиотека с самым малым количеством книг </p>
+        <p class="mb-0"><a href="/home">Вернуться на главную</a></p>
+      </div>
+  </footer>
     <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script>
     // Показать или скрыть кнопку при прокрутке
@@ -267,5 +232,6 @@
             document.documentElement.scrollTop = 0; // Для Chrome, Firefox, IE и Opera
         });
     </script>
-    </body>
+    
+  </body>
 </html>

@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     public function showBook() {
+        
         $books = Book::all();
         return view('book', ['books' => $books]);
     }
+
 }

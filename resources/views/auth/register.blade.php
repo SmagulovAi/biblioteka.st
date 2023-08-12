@@ -1,5 +1,3 @@
-
-
 @if($errors->any())
     <h3 style="color: red;">Есть ошибки:</h3>
     <ul>
@@ -14,20 +12,10 @@
         Имя:
         <input type="text" name="name" value="{{ old('name') }}">
     </label>
-
-
-
-
     <label>
         Email:
         <input type="text" name="email" value="{{ old('email') }}">
     </label>
-    
-
-
-
-
-
     <label>
         Пароль:
         <input type="password" name="password">
